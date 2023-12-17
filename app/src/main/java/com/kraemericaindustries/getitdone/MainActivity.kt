@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.viewPager.adapter = PagerAdapter(this)
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+        binding.pager.adapter = PagerAdapter(this)
+        TabLayoutMediator(binding.tabs, binding.pager) { tab, position ->
             tab.text = "Tasks"
         }.attach()
 
