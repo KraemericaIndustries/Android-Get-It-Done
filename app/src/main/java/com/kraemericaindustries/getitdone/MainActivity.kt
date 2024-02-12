@@ -35,8 +35,12 @@ class MainActivity : AppCompatActivity() {
         val taskDao = database.getTaskDao()
 
         thread {
-            taskDao.createTask(Task(title = "Another task"))
-            taskDao.getAllTasks()
+            taskDao.createTask(Task(title = "A third task"))
+            val tasks = taskDao.getAllTasks()
+
+            runOnUiThread {
+                Toast.makeText(this, "Number of tasks: ${tasks.size}", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
