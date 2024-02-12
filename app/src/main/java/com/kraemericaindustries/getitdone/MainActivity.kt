@@ -9,8 +9,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kraemericaindustries.getitdone.data.GetItDoneDatabase
+import com.kraemericaindustries.getitdone.data.Task
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +32,12 @@ class MainActivity : AppCompatActivity() {
 
         val database = GetItDoneDatabase.createDatabase(this)
 
-        database.getTaskDao()
+        val taskDao = database.getTaskDao()
+
+        thread {
+            taskDao.createTask(Task(title = "Another task"))
+            taskDao.getAllTasks()
+        }
     }
 
     private fun showAddTaskDialog() {
