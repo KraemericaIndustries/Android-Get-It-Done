@@ -35,7 +35,11 @@ class MainActivity : AppCompatActivity() {
         val taskDao = database.getTaskDao()
 
         thread {
-            taskDao.createTask(Task(title = "A third task"))
+            taskDao.createTask(Task(
+                title = "My cool title",
+                description = "Some funky desctiption",
+                isStarred = true
+            ))
             val tasks = taskDao.getAllTasks()
 
             runOnUiThread {
