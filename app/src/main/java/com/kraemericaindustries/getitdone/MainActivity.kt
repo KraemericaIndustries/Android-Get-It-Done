@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kraemericaindustries.getitdone.data.GetItDoneDatabase
@@ -17,6 +18,8 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var database: GetItDoneDatabase
+    private val taskDao by lazy { database.getTaskDao() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,39 +33,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener {showAddTaskDialog() }
 
-        val database = GetItDoneDatabase.createDatabase(this)
+        database = GetItDoneDatabase.createDatabase(this)
 
-        val taskDao = database.getTaskDao()
 
-        thread {
-            taskDao.createTask(Task(
-                title = "My cool title",
-                description = "Some funky desctiption",
-                isStarred = true
-            ))
-            val tasks = taskDao.getAllTasks()
 
-            runOnUiThread {
-                Toast.makeText(this, "Number of tasks: ${tasks.size}", Toast.LENGTH_LONG).show()
-            }
-        }
     }
 
     private fun showAddTaskDialog() {
         val dialogBinding = DialogAddTaskBinding.inflate(layoutInflater)
 
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Add new task")
-            .setView(dialogBinding.root)
-            .setPositiveButton("Save") { _, _ ->
-                Toast.makeText(
-                    this,
-                    "Your task is: ${dialogBinding.editText.text}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(dialogBinding.root)
+        dialog.show()
     }
 
 
