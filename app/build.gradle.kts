@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.kraemericaindustries.getitdone"
-        minSdk = 24
+        minSdk = 14
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

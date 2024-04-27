@@ -2,18 +2,16 @@ package com.kraemericaindustries.getitdone
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kraemericaindustries.getitdone.data.GetItDoneDatabase
 import com.kraemericaindustries.getitdone.data.Task
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,10 +29,9 @@ class MainActivity : AppCompatActivity() {
             tab.text = "Tasks"
         }.attach()
 
-        binding.fab.setOnClickListener {showAddTaskDialog() }
+        binding.fab.setOnClickListener { showAddTaskDialog() }
 
         database = GetItDoneDatabase.createDatabase(this)
-
 
 
     }
@@ -44,9 +41,15 @@ class MainActivity : AppCompatActivity() {
 
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(dialogBinding.root)
+
+        dialogBinding.buttonShowDetails.setOnClickListener {
+            dialogBinding.editTextTaskDetails.visibility =
+                if (dialogBinding.editTextTaskDetails.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+        }
+
+
         dialog.show()
     }
-
 
     inner class PagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
         override fun getItemCount() = 1
