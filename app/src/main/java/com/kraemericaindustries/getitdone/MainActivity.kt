@@ -12,6 +12,7 @@ import com.kraemericaindustries.getitdone.data.GetItDoneDatabase
 import com.kraemericaindustries.getitdone.data.Task
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,6 +48,16 @@ class MainActivity : AppCompatActivity() {
                 if (dialogBinding.editTextTaskDetails.visibility == View.VISIBLE) View.GONE else View.VISIBLE
         }
 
+        dialogBinding.buttonSave.setOnClickListener {
+            val task = Task(
+                title = dialogBinding.editTextTaskTitle.text.toString(),
+                description = dialogBinding.editTextTaskDetails.text.toString()
+            )
+            thread {
+                taskDao.createTask(task)
+            }
+            dialog.dismiss()
+        }
 
         dialog.show()
     }
