@@ -7,4 +7,6 @@
     <string name="dialog_add_task_save_button">Save</string>
     <string name="dialog_add_task_star_button" />
     <string name="dialog_add_task_details_button">Add Details</string>
+    <string name="main_float_plus">main_float_plus</string>
+    <string name="main_icon_account">main_icon_account</string>
 </resources>
