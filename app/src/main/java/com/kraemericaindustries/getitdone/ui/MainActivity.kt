@@ -1,4 +1,4 @@
-package com.kraemericaindustries.getitdone
+package com.kraemericaindustries.getitdone.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,10 +8,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kraemericaindustries.getitdone.R
 import com.kraemericaindustries.getitdone.data.GetItDoneDatabase
 import com.kraemericaindustries.getitdone.data.Task
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
+import com.kraemericaindustries.getitdone.ui.tasks.TasksFragment
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {

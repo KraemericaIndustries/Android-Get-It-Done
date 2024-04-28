@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -26,7 +26,9 @@
                 android:layout_height="36dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/icon_account" />
+                android:src="@drawable/icon_account"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@string/main_icon_account" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -51,6 +53,7 @@
     android:id="@+id/fab"
     android:src="@drawable/icon_add"
     app:layout_constraintEnd_toEndOf="parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/main_float_plus" />
     
 </androidx.constraintlayout.widget.ConstraintLayout>
