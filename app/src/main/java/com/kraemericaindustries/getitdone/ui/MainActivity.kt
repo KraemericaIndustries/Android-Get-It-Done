@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: GetItDoneDatabase
     private val taskDao by lazy { database.getTaskDao() }
+    private val tasksFragment: TasksFragment = TasksFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener { showAddTaskDialog() }
 
-        database = GetItDoneDatabase.createDatabase(this)
+        database = GetItDoneDatabase.getDatabase(this)
 
 
     }
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                 taskDao.createTask(task)
             }
             dialog.dismiss()
+            tasksFragment.fetchAllTasks()
         }
 
         dialog.show()
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount() = 1
 
         override fun createFragment(position: Int): Fragment {
-            return TasksFragment()
+            return tasksFragment
         }
     }
 }

@@ -14,7 +14,7 @@ class TasksFragment : Fragment() {
 
     private lateinit var binding: FragmentTasksBinding
     private val taskDao: TaskDao by lazy {
-        GetItDoneDatabase.createDatabase(requireContext()).getTaskDao()
+        GetItDoneDatabase.getDatabase(requireContext()).getTaskDao()
     }
 
     override fun onCreateView(
@@ -28,6 +28,10 @@ class TasksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fetchAllTasks()
+    }
+
+    fun fetchAllTasks() {
         thread {
             val tasks = taskDao.getAllTasks()
             requireActivity().runOnUiThread {
