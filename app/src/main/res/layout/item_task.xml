@@ -14,7 +14,6 @@
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/check_box"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +46,7 @@
     <CheckBox
         android:id="@+id/toggle_star"
         android:layout_width="wrap_content"
-        android:button="@drawable/icon_star"
-        android:checked="true"
+        android:button="@drawable/icon_star_selector"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
