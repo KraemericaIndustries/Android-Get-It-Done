@@ -40,6 +40,9 @@ class TasksAdapter(private val listener: TaskUpdatedListener) :
             if (task.isComplete) {
                 binding.textViewTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 binding.textViewDetails.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            } else {
+                binding.textViewTitle.paintFlags = 0
+                binding.textViewDetails.paintFlags = 0
             }
             binding.textViewTitle.text = task.title
             binding.textViewDetails.text = task.description
