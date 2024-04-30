@@ -37,6 +37,7 @@ class TasksAdapter(private val listener: TaskUpdatedListener) :
         fun bind(task: Task) {
             binding.checkBox.isChecked = task.isComplete
             binding.toggleStar.isChecked = task.isStarred
+
             if (task.isComplete) {
                 binding.textViewTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 binding.textViewDetails.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
@@ -44,20 +45,16 @@ class TasksAdapter(private val listener: TaskUpdatedListener) :
                 binding.textViewTitle.paintFlags = 0
                 binding.textViewDetails.paintFlags = 0
             }
+
             binding.textViewTitle.text = task.title
             binding.textViewDetails.text = task.description
-            binding.checkBox.addOnCheckedStateChangedListener { _, state ->
-                val updatedTask = when (state) {
-                    MaterialCheckBox.STATE_CHECKED -> task.copy(isComplete = true)
-                    else -> task.copy(isComplete = false)
-                }
+
+            binding.checkBox.setOnClickListener {
+                val updatedTask = task.copy(isComplete = binding.checkBox.isChecked)
                 listener.onTaskUpdated(updatedTask)
             }
-            binding.toggleStar.addOnCheckedStateChangedListener { _, state ->
-                val updatedTask = when (state) {
-                    MaterialCheckBox.STATE_CHECKED -> task.copy(isStarred = true)
-                    else -> task.copy(isStarred = false)
-                }
+            binding.toggleStar.setOnClickListener {
+                val updatedTask = task.copy(isStarred = binding.toggleStar.isChecked)
                 listener.onTaskUpdated(updatedTask)
             }
         }
