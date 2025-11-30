@@ -18,7 +18,8 @@ class MainViewModel : ViewModel() {
     fun createTask(title: String, description: String?) {
         val task = Task(
             title = title,
-            description = description
+            description = description,
+            listId = 1
         )
         viewModelScope.launch {
             repository.createTask(task)
