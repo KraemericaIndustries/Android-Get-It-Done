@@ -12,9 +12,9 @@ import com.kraemericaindustries.getitdone.databinding.FragmentTasksBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class TasksFragment: Fragment(), TasksAdapter.TaskItemClickListener {
+class StarredTasksFragment : Fragment(), TasksAdapter.TaskItemClickListener {
 
-    private val viewModel: TasksViewModel by viewModels()
+    private val viewModel: StarredTasksViewModel by viewModels()
     private lateinit var binding: FragmentTasksBinding
     private val adapter = TasksAdapter(this)
 

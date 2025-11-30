@@ -1,4 +1,4 @@
-package com.kraemericaindustries.getitdone.data
+package com.kraemericaindustries.getitdone.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

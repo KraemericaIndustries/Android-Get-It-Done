@@ -3,12 +3,13 @@ package com.kraemericaindustries.getitdone.ui.tasks
 import android.annotation.SuppressLint
 import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.kraemericaindustries.getitdone.data.Task
+import com.kraemericaindustries.getitdone.data.model.Task
 import com.kraemericaindustries.getitdone.databinding.ItemTaskBinding
 
-class TasksAdapter(private val listener: TaskUpdatedListener) :
+class TasksAdapter(private val listener: TaskItemClickListener) :
     RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
 
     private var tasks: List<Task> = listOf()
@@ -37,33 +38,46 @@ class TasksAdapter(private val listener: TaskUpdatedListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(task: Task) {
-            binding.checkBox.isChecked = task.isComplete
-            binding.toggleStar.isChecked = task.isStarred
+            binding.apply {
 
-            if (task.isComplete) {
-                binding.textViewTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                binding.textViewDetails.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            } else {
-                binding.textViewTitle.paintFlags = 0
-                binding.textViewDetails.paintFlags = 0
-            }
+                checkBox.isChecked = task.isComplete
+                toggleStar.isChecked = task.isStarred
+                root.setOnLongClickListener {
+                    listener.onTaskDeleted(task)
+                    true
+                }
+                if (task.isComplete) {
+                    textViewTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    textViewDetails.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                } else {
+                    textViewTitle.paintFlags = 0
+                    textViewDetails.paintFlags = 0
+                }
 
-            binding.textViewTitle.text = task.title
-            binding.textViewDetails.text = task.description
+                textViewTitle.text = task.title
+                if (task.description.isNullOrEmpty()) {
+                    textViewDetails.visibility = View.GONE
+                } else {
+                    textViewDetails.text = task.description
+                    textViewDetails.visibility = View.VISIBLE
+                }
 
-            binding.checkBox.setOnClickListener {
-                val updatedTask = task.copy(isComplete = binding.checkBox.isChecked)
-                listener.onTaskUpdated(updatedTask)
-            }
-            binding.toggleStar.setOnClickListener {
-                val updatedTask = task.copy(isStarred = binding.toggleStar.isChecked)
-                listener.onTaskUpdated(updatedTask)
+                checkBox.setOnClickListener {
+                    val updatedTask = task.copy(isComplete = checkBox.isChecked)
+                    listener.onTaskUpdated(updatedTask)
+                }
+                toggleStar.setOnClickListener {
+                    val updatedTask = task.copy(isStarred = toggleStar.isChecked)
+                    listener.onTaskUpdated(updatedTask)
+                }
             }
         }
     }
 
-    interface TaskUpdatedListener {
+    interface TaskItemClickListener {
 
         fun onTaskUpdated(task: Task)
+
+        fun onTaskDeleted(task: Task)
     }
 }
