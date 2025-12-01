@@ -14,6 +14,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kraemericaindustries.getitdone.R
+import com.kraemericaindustries.getitdone.data.model.TaskList
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
 import com.kraemericaindustries.getitdone.ui.tasks.StarredTasksFragment
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private var currentTaskLists: List<TaskList> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
             lifecycleScope.launch {
                 viewModel.getTaskLists().collectLatest { taskLists ->
+
+
+                    currentTaskLists = taskLists
 
                     pager.adapter = PagerAdapter(this@MainActivity, taskLists.size + 2)
                     pager.currentItem = 1
@@ -73,10 +78,17 @@ class MainActivity : AppCompatActivity() {
                     if (editTextTaskDetails.visibility == View.VISIBLE) View.GONE else View.VISIBLE
             }
 
+
+            binding.pager.currentItem
+
             buttonSave.setOnClickListener {
+
+                val selectedTaskListId = currentTaskLists[binding.pager.currentItem - 1].id
+
                 viewModel.createTask(
                     title = editTextTaskTitle.text.toString(),
-                    description = editTextTaskDetails.text.toString()
+                    description = editTextTaskDetails.text.toString(),
+                    listId = selectedTaskListId
                 )
                 dialog.dismiss()
             }
