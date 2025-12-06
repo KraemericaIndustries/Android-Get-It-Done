@@ -2,7 +2,6 @@ package com.kraemericaindustries.getitdone.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,11 +11,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kraemericaindustries.getitdone.R
 import com.kraemericaindustries.getitdone.data.model.TaskList
 import com.kraemericaindustries.getitdone.databinding.ActivityMainBinding
 import com.kraemericaindustries.getitdone.databinding.DialogAddTaskBinding
+import com.kraemericaindustries.getitdone.databinding.DialogAddTaskListBinding
+import com.kraemericaindustries.getitdone.databinding.TabButtonBinding
 import com.kraemericaindustries.getitdone.ui.tasks.StarredTasksFragment
 import com.kraemericaindustries.getitdone.ui.tasks.TasksFragment
 import com.kraemericaindustries.getitdone.util.InputValidator
@@ -45,8 +47,12 @@ class MainActivity : AppCompatActivity() {
                     TabLayoutMediator(tabs, pager) { tab, position ->
                         when (position) {
                             0 -> tab.icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.icon_star_filled)
-                            taskLists.size + 1 -> tab.customView = Button(this@MainActivity).apply {
-                                text = "Add New List"
+                            taskLists.size + 1 -> {
+
+                                val buttonBinding = TabButtonBinding.inflate(layoutInflater)
+                                tab.customView = buttonBinding.root.apply {
+                                 setOnClickListener { showAddTaskListDialog() }
+                                }
                             }
                             else -> tab.text = taskLists[position - 1].name
                         }
@@ -58,6 +64,21 @@ class MainActivity : AppCompatActivity() {
             fab.setOnClickListener { showAddTaskDialog() }
             setContentView(root)
         }
+    }
+
+    private fun showAddTaskListDialog() {
+        val dialogBinding = DialogAddTaskListBinding.inflate(layoutInflater)
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.add_new_list_dialog_title))
+            .setView(dialogBinding.root)
+            .setPositiveButton(getString(R.string.create_button_text)) { dialog, _ ->
+                viewModel.addNewTaskList(dialogBinding.editTextListName.text?.toString())
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.cancel_button_text)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun showAddTaskDialog() {

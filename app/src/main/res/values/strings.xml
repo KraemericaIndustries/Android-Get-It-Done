@@ -9,4 +9,9 @@
     <string name="dialog_add_task_details_button">Add Details</string>
     <string name="main_float_plus">main_float_plus</string>
     <string name="main_icon_account">main_icon_account</string>
+    <string name="add_new_list_button_text">Add new list</string>
+    <string name="add_new_list_dialog_title">Add new list</string>
+    <string name="create_button_text">Create</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="add_task_list_field_hint">List Name</string>
 </resources>
