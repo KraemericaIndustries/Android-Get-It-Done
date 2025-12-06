@@ -12,8 +12,8 @@ class TasksViewModel : ViewModel() {
 
     private val repository: TaskRepository = GetItDoneApplication.taskRepository
 
-    suspend fun fetchTasks(): Flow<List<Task>> {
-        return repository.getTasks()
+    suspend fun fetchTasks(taskListId: Int): Flow<List<Task>> {
+        return repository.getTasks(taskListId)
     }
 
     fun updateTask(task: Task) {

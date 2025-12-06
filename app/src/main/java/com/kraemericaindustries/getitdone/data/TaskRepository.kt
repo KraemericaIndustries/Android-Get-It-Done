@@ -12,8 +12,8 @@ class TaskRepository(private val taskDao: TaskDao, private val taskListDao: Task
         taskDao.createTask(task)
     }
 
-    suspend fun getTasks(): Flow<List<Task>> {
-        return taskDao.getAllTasks()
+    suspend fun getTasks(taskListId: Int): Flow<List<Task>> {
+        return taskDao.getAllTasks(taskListId)
     }
 
     fun getStarredTasks(): Flow<List<Task>> {
